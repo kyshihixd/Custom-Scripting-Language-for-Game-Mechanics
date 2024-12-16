@@ -1,1 +1,20 @@
-max((5+2), 3, (9-11-5))
+pokemon Pikachu {
+    hp: 100;
+    speed: 50;
+}
+
+pokemon Charmander {
+    hp: 120;
+    speed: 45;
+}
+
+move Thunderbolt {
+    power: 40;
+}
+
+move Flamethrower {
+    power: 30;
+}
+
+Pikachu uses Thunderbolt;
+Charmander uses Flamethrower;

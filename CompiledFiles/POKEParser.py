@@ -1,4 +1,4 @@
-# Generated from Sample.g4 by ANTLR 4.9.2
+# Generated from POKE.g4 by ANTLR 4.9.2
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
@@ -56,9 +56,9 @@ def serializedATN():
         return buf.getvalue()
 
 
-class SampleParser ( Parser ):
+class POKEParser ( Parser ):
 
-    grammarFileName = "Sample.g4"
+    grammarFileName = "POKE.g4"
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
@@ -77,7 +77,7 @@ class SampleParser ( Parser ):
                       "<INVALID>", "<INVALID>", "IDENTIFIER", "STRING", 
                       "INT", "FLOAT", "BOOLEAN", "WHITESPACE", "COMMENT" ]
 
-    RULE_program = 0
+    RULE_script = 0
     RULE_statement = 1
     RULE_pokemon = 2
     RULE_pokemon_body = 3
@@ -93,7 +93,7 @@ class SampleParser ( Parser ):
     RULE_comparison_operator = 13
     RULE_value = 14
 
-    ruleNames =  [ "program", "statement", "pokemon", "pokemon_body", "pokemon_attribute", 
+    ruleNames =  [ "script", "statement", "pokemon", "pokemon_body", "pokemon_attribute", 
                    "move", "move_body", "move_attribute", "action_statement", 
                    "update_attr_statement", "condition_statement", "condition", 
                    "expression", "comparison_operator", "value" ]
@@ -133,7 +133,7 @@ class SampleParser ( Parser ):
 
 
 
-    class ProgramContext(ParserRuleContext):
+    class ScriptContext(ParserRuleContext):
         __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
@@ -142,34 +142,34 @@ class SampleParser ( Parser ):
 
         def statement(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(SampleParser.StatementContext)
+                return self.getTypedRuleContexts(POKEParser.StatementContext)
             else:
-                return self.getTypedRuleContext(SampleParser.StatementContext,i)
+                return self.getTypedRuleContext(POKEParser.StatementContext,i)
 
 
         def getRuleIndex(self):
-            return SampleParser.RULE_program
+            return POKEParser.RULE_script
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitProgram" ):
-                return visitor.visitProgram(self)
+            if hasattr( visitor, "visitScript" ):
+                return visitor.visitScript(self)
             else:
                 return visitor.visitChildren(self)
 
 
 
 
-    def program(self):
+    def script(self):
 
-        localctx = SampleParser.ProgramContext(self, self._ctx, self.state)
-        self.enterRule(localctx, 0, self.RULE_program)
+        localctx = POKEParser.ScriptContext(self, self._ctx, self.state)
+        self.enterRule(localctx, 0, self.RULE_script)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 33
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SampleParser.T__0) | (1 << SampleParser.T__5) | (1 << SampleParser.T__7) | (1 << SampleParser.T__10) | (1 << SampleParser.IDENTIFIER))) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << POKEParser.T__0) | (1 << POKEParser.T__5) | (1 << POKEParser.T__7) | (1 << POKEParser.T__10) | (1 << POKEParser.IDENTIFIER))) != 0):
                 self.state = 30
                 self.statement()
                 self.state = 35
@@ -193,27 +193,27 @@ class SampleParser ( Parser ):
             self.parser = parser
 
         def pokemon(self):
-            return self.getTypedRuleContext(SampleParser.PokemonContext,0)
+            return self.getTypedRuleContext(POKEParser.PokemonContext,0)
 
 
         def move(self):
-            return self.getTypedRuleContext(SampleParser.MoveContext,0)
+            return self.getTypedRuleContext(POKEParser.MoveContext,0)
 
 
         def action_statement(self):
-            return self.getTypedRuleContext(SampleParser.Action_statementContext,0)
+            return self.getTypedRuleContext(POKEParser.Action_statementContext,0)
 
 
         def condition_statement(self):
-            return self.getTypedRuleContext(SampleParser.Condition_statementContext,0)
+            return self.getTypedRuleContext(POKEParser.Condition_statementContext,0)
 
 
         def update_attr_statement(self):
-            return self.getTypedRuleContext(SampleParser.Update_attr_statementContext,0)
+            return self.getTypedRuleContext(POKEParser.Update_attr_statementContext,0)
 
 
         def getRuleIndex(self):
-            return SampleParser.RULE_statement
+            return POKEParser.RULE_statement
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitStatement" ):
@@ -226,33 +226,33 @@ class SampleParser ( Parser ):
 
     def statement(self):
 
-        localctx = SampleParser.StatementContext(self, self._ctx, self.state)
+        localctx = POKEParser.StatementContext(self, self._ctx, self.state)
         self.enterRule(localctx, 2, self.RULE_statement)
         try:
             self.state = 41
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [SampleParser.T__0]:
+            if token in [POKEParser.T__0]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 36
                 self.pokemon()
                 pass
-            elif token in [SampleParser.T__5]:
+            elif token in [POKEParser.T__5]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 37
                 self.move()
                 pass
-            elif token in [SampleParser.IDENTIFIER]:
+            elif token in [POKEParser.IDENTIFIER]:
                 self.enterOuterAlt(localctx, 3)
                 self.state = 38
                 self.action_statement()
                 pass
-            elif token in [SampleParser.T__10]:
+            elif token in [POKEParser.T__10]:
                 self.enterOuterAlt(localctx, 4)
                 self.state = 39
                 self.condition_statement()
                 pass
-            elif token in [SampleParser.T__7]:
+            elif token in [POKEParser.T__7]:
                 self.enterOuterAlt(localctx, 5)
                 self.state = 40
                 self.update_attr_statement()
@@ -277,14 +277,14 @@ class SampleParser ( Parser ):
             self.parser = parser
 
         def IDENTIFIER(self):
-            return self.getToken(SampleParser.IDENTIFIER, 0)
+            return self.getToken(POKEParser.IDENTIFIER, 0)
 
         def pokemon_body(self):
-            return self.getTypedRuleContext(SampleParser.Pokemon_bodyContext,0)
+            return self.getTypedRuleContext(POKEParser.Pokemon_bodyContext,0)
 
 
         def getRuleIndex(self):
-            return SampleParser.RULE_pokemon
+            return POKEParser.RULE_pokemon
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitPokemon" ):
@@ -297,20 +297,20 @@ class SampleParser ( Parser ):
 
     def pokemon(self):
 
-        localctx = SampleParser.PokemonContext(self, self._ctx, self.state)
+        localctx = POKEParser.PokemonContext(self, self._ctx, self.state)
         self.enterRule(localctx, 4, self.RULE_pokemon)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 43
-            self.match(SampleParser.T__0)
+            self.match(POKEParser.T__0)
             self.state = 44
-            self.match(SampleParser.IDENTIFIER)
+            self.match(POKEParser.IDENTIFIER)
             self.state = 45
-            self.match(SampleParser.T__1)
+            self.match(POKEParser.T__1)
             self.state = 46
             self.pokemon_body()
             self.state = 47
-            self.match(SampleParser.T__2)
+            self.match(POKEParser.T__2)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -329,13 +329,13 @@ class SampleParser ( Parser ):
 
         def pokemon_attribute(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(SampleParser.Pokemon_attributeContext)
+                return self.getTypedRuleContexts(POKEParser.Pokemon_attributeContext)
             else:
-                return self.getTypedRuleContext(SampleParser.Pokemon_attributeContext,i)
+                return self.getTypedRuleContext(POKEParser.Pokemon_attributeContext,i)
 
 
         def getRuleIndex(self):
-            return SampleParser.RULE_pokemon_body
+            return POKEParser.RULE_pokemon_body
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitPokemon_body" ):
@@ -348,7 +348,7 @@ class SampleParser ( Parser ):
 
     def pokemon_body(self):
 
-        localctx = SampleParser.Pokemon_bodyContext(self, self._ctx, self.state)
+        localctx = POKEParser.Pokemon_bodyContext(self, self._ctx, self.state)
         self.enterRule(localctx, 6, self.RULE_pokemon_body)
         self._la = 0 # Token type
         try:
@@ -356,15 +356,15 @@ class SampleParser ( Parser ):
             self.state = 55
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==SampleParser.IDENTIFIER:
+            while _la==POKEParser.IDENTIFIER:
                 self.state = 49
                 self.pokemon_attribute()
                 self.state = 51
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==SampleParser.T__3:
+                if _la==POKEParser.T__3:
                     self.state = 50
-                    self.match(SampleParser.T__3)
+                    self.match(POKEParser.T__3)
 
 
                 self.state = 57
@@ -388,14 +388,14 @@ class SampleParser ( Parser ):
             self.parser = parser
 
         def IDENTIFIER(self):
-            return self.getToken(SampleParser.IDENTIFIER, 0)
+            return self.getToken(POKEParser.IDENTIFIER, 0)
 
         def value(self):
-            return self.getTypedRuleContext(SampleParser.ValueContext,0)
+            return self.getTypedRuleContext(POKEParser.ValueContext,0)
 
 
         def getRuleIndex(self):
-            return SampleParser.RULE_pokemon_attribute
+            return POKEParser.RULE_pokemon_attribute
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitPokemon_attribute" ):
@@ -408,14 +408,14 @@ class SampleParser ( Parser ):
 
     def pokemon_attribute(self):
 
-        localctx = SampleParser.Pokemon_attributeContext(self, self._ctx, self.state)
+        localctx = POKEParser.Pokemon_attributeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 8, self.RULE_pokemon_attribute)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 58
-            self.match(SampleParser.IDENTIFIER)
+            self.match(POKEParser.IDENTIFIER)
             self.state = 59
-            self.match(SampleParser.T__4)
+            self.match(POKEParser.T__4)
             self.state = 60
             self.value()
         except RecognitionException as re:
@@ -435,14 +435,14 @@ class SampleParser ( Parser ):
             self.parser = parser
 
         def IDENTIFIER(self):
-            return self.getToken(SampleParser.IDENTIFIER, 0)
+            return self.getToken(POKEParser.IDENTIFIER, 0)
 
         def move_body(self):
-            return self.getTypedRuleContext(SampleParser.Move_bodyContext,0)
+            return self.getTypedRuleContext(POKEParser.Move_bodyContext,0)
 
 
         def getRuleIndex(self):
-            return SampleParser.RULE_move
+            return POKEParser.RULE_move
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitMove" ):
@@ -455,20 +455,20 @@ class SampleParser ( Parser ):
 
     def move(self):
 
-        localctx = SampleParser.MoveContext(self, self._ctx, self.state)
+        localctx = POKEParser.MoveContext(self, self._ctx, self.state)
         self.enterRule(localctx, 10, self.RULE_move)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 62
-            self.match(SampleParser.T__5)
+            self.match(POKEParser.T__5)
             self.state = 63
-            self.match(SampleParser.IDENTIFIER)
+            self.match(POKEParser.IDENTIFIER)
             self.state = 64
-            self.match(SampleParser.T__1)
+            self.match(POKEParser.T__1)
             self.state = 65
             self.move_body()
             self.state = 66
-            self.match(SampleParser.T__2)
+            self.match(POKEParser.T__2)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -487,13 +487,13 @@ class SampleParser ( Parser ):
 
         def move_attribute(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(SampleParser.Move_attributeContext)
+                return self.getTypedRuleContexts(POKEParser.Move_attributeContext)
             else:
-                return self.getTypedRuleContext(SampleParser.Move_attributeContext,i)
+                return self.getTypedRuleContext(POKEParser.Move_attributeContext,i)
 
 
         def getRuleIndex(self):
-            return SampleParser.RULE_move_body
+            return POKEParser.RULE_move_body
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitMove_body" ):
@@ -506,7 +506,7 @@ class SampleParser ( Parser ):
 
     def move_body(self):
 
-        localctx = SampleParser.Move_bodyContext(self, self._ctx, self.state)
+        localctx = POKEParser.Move_bodyContext(self, self._ctx, self.state)
         self.enterRule(localctx, 12, self.RULE_move_body)
         self._la = 0 # Token type
         try:
@@ -514,15 +514,15 @@ class SampleParser ( Parser ):
             self.state = 74
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==SampleParser.IDENTIFIER:
+            while _la==POKEParser.IDENTIFIER:
                 self.state = 68
                 self.move_attribute()
                 self.state = 70
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==SampleParser.T__3:
+                if _la==POKEParser.T__3:
                     self.state = 69
-                    self.match(SampleParser.T__3)
+                    self.match(POKEParser.T__3)
 
 
                 self.state = 76
@@ -546,14 +546,14 @@ class SampleParser ( Parser ):
             self.parser = parser
 
         def IDENTIFIER(self):
-            return self.getToken(SampleParser.IDENTIFIER, 0)
+            return self.getToken(POKEParser.IDENTIFIER, 0)
 
         def value(self):
-            return self.getTypedRuleContext(SampleParser.ValueContext,0)
+            return self.getTypedRuleContext(POKEParser.ValueContext,0)
 
 
         def getRuleIndex(self):
-            return SampleParser.RULE_move_attribute
+            return POKEParser.RULE_move_attribute
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitMove_attribute" ):
@@ -566,14 +566,14 @@ class SampleParser ( Parser ):
 
     def move_attribute(self):
 
-        localctx = SampleParser.Move_attributeContext(self, self._ctx, self.state)
+        localctx = POKEParser.Move_attributeContext(self, self._ctx, self.state)
         self.enterRule(localctx, 14, self.RULE_move_attribute)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 77
-            self.match(SampleParser.IDENTIFIER)
+            self.match(POKEParser.IDENTIFIER)
             self.state = 78
-            self.match(SampleParser.T__4)
+            self.match(POKEParser.T__4)
             self.state = 79
             self.value()
         except RecognitionException as re:
@@ -594,12 +594,12 @@ class SampleParser ( Parser ):
 
         def IDENTIFIER(self, i:int=None):
             if i is None:
-                return self.getTokens(SampleParser.IDENTIFIER)
+                return self.getTokens(POKEParser.IDENTIFIER)
             else:
-                return self.getToken(SampleParser.IDENTIFIER, i)
+                return self.getToken(POKEParser.IDENTIFIER, i)
 
         def getRuleIndex(self):
-            return SampleParser.RULE_action_statement
+            return POKEParser.RULE_action_statement
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitAction_statement" ):
@@ -612,16 +612,16 @@ class SampleParser ( Parser ):
 
     def action_statement(self):
 
-        localctx = SampleParser.Action_statementContext(self, self._ctx, self.state)
+        localctx = POKEParser.Action_statementContext(self, self._ctx, self.state)
         self.enterRule(localctx, 16, self.RULE_action_statement)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 81
-            self.match(SampleParser.IDENTIFIER)
+            self.match(POKEParser.IDENTIFIER)
             self.state = 82
-            self.match(SampleParser.T__6)
+            self.match(POKEParser.T__6)
             self.state = 83
-            self.match(SampleParser.IDENTIFIER)
+            self.match(POKEParser.IDENTIFIER)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -640,16 +640,16 @@ class SampleParser ( Parser ):
 
         def IDENTIFIER(self, i:int=None):
             if i is None:
-                return self.getTokens(SampleParser.IDENTIFIER)
+                return self.getTokens(POKEParser.IDENTIFIER)
             else:
-                return self.getToken(SampleParser.IDENTIFIER, i)
+                return self.getToken(POKEParser.IDENTIFIER, i)
 
         def value(self):
-            return self.getTypedRuleContext(SampleParser.ValueContext,0)
+            return self.getTypedRuleContext(POKEParser.ValueContext,0)
 
 
         def getRuleIndex(self):
-            return SampleParser.RULE_update_attr_statement
+            return POKEParser.RULE_update_attr_statement
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitUpdate_attr_statement" ):
@@ -662,24 +662,24 @@ class SampleParser ( Parser ):
 
     def update_attr_statement(self):
 
-        localctx = SampleParser.Update_attr_statementContext(self, self._ctx, self.state)
+        localctx = POKEParser.Update_attr_statementContext(self, self._ctx, self.state)
         self.enterRule(localctx, 18, self.RULE_update_attr_statement)
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 85
-            self.match(SampleParser.T__7)
+            self.match(POKEParser.T__7)
             self.state = 86
-            self.match(SampleParser.IDENTIFIER)
+            self.match(POKEParser.IDENTIFIER)
             self.state = 87
-            self.match(SampleParser.T__8)
+            self.match(POKEParser.T__8)
             self.state = 88
-            self.match(SampleParser.IDENTIFIER)
+            self.match(POKEParser.IDENTIFIER)
             self.state = 89
-            self.match(SampleParser.T__9)
+            self.match(POKEParser.T__9)
             self.state = 90
             self.value()
             self.state = 91
-            self.match(SampleParser.T__3)
+            self.match(POKEParser.T__3)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -698,20 +698,20 @@ class SampleParser ( Parser ):
 
         def condition(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(SampleParser.ConditionContext)
+                return self.getTypedRuleContexts(POKEParser.ConditionContext)
             else:
-                return self.getTypedRuleContext(SampleParser.ConditionContext,i)
+                return self.getTypedRuleContext(POKEParser.ConditionContext,i)
 
 
         def statement(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(SampleParser.StatementContext)
+                return self.getTypedRuleContexts(POKEParser.StatementContext)
             else:
-                return self.getTypedRuleContext(SampleParser.StatementContext,i)
+                return self.getTypedRuleContext(POKEParser.StatementContext,i)
 
 
         def getRuleIndex(self):
-            return SampleParser.RULE_condition_statement
+            return POKEParser.RULE_condition_statement
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitCondition_statement" ):
@@ -724,27 +724,27 @@ class SampleParser ( Parser ):
 
     def condition_statement(self):
 
-        localctx = SampleParser.Condition_statementContext(self, self._ctx, self.state)
+        localctx = POKEParser.Condition_statementContext(self, self._ctx, self.state)
         self.enterRule(localctx, 20, self.RULE_condition_statement)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 93
-            self.match(SampleParser.T__10)
+            self.match(POKEParser.T__10)
             self.state = 94
-            self.match(SampleParser.T__11)
+            self.match(POKEParser.T__11)
             self.state = 101
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SampleParser.IDENTIFIER) | (1 << SampleParser.STRING) | (1 << SampleParser.INT) | (1 << SampleParser.FLOAT) | (1 << SampleParser.BOOLEAN))) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << POKEParser.IDENTIFIER) | (1 << POKEParser.STRING) | (1 << POKEParser.INT) | (1 << POKEParser.FLOAT) | (1 << POKEParser.BOOLEAN))) != 0):
                 self.state = 95
                 self.condition()
                 self.state = 97
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==SampleParser.T__3:
+                if _la==POKEParser.T__3:
                     self.state = 96
-                    self.match(SampleParser.T__3)
+                    self.match(POKEParser.T__3)
 
 
                 self.state = 103
@@ -752,21 +752,21 @@ class SampleParser ( Parser ):
                 _la = self._input.LA(1)
 
             self.state = 104
-            self.match(SampleParser.T__12)
+            self.match(POKEParser.T__12)
             self.state = 105
-            self.match(SampleParser.T__1)
+            self.match(POKEParser.T__1)
             self.state = 112
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SampleParser.T__0) | (1 << SampleParser.T__5) | (1 << SampleParser.T__7) | (1 << SampleParser.T__10) | (1 << SampleParser.IDENTIFIER))) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << POKEParser.T__0) | (1 << POKEParser.T__5) | (1 << POKEParser.T__7) | (1 << POKEParser.T__10) | (1 << POKEParser.IDENTIFIER))) != 0):
                 self.state = 106
                 self.statement()
                 self.state = 108
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if _la==SampleParser.T__3:
+                if _la==POKEParser.T__3:
                     self.state = 107
-                    self.match(SampleParser.T__3)
+                    self.match(POKEParser.T__3)
 
 
                 self.state = 114
@@ -774,7 +774,7 @@ class SampleParser ( Parser ):
                 _la = self._input.LA(1)
 
             self.state = 115
-            self.match(SampleParser.T__2)
+            self.match(POKEParser.T__2)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -793,17 +793,17 @@ class SampleParser ( Parser ):
 
         def expression(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(SampleParser.ExpressionContext)
+                return self.getTypedRuleContexts(POKEParser.ExpressionContext)
             else:
-                return self.getTypedRuleContext(SampleParser.ExpressionContext,i)
+                return self.getTypedRuleContext(POKEParser.ExpressionContext,i)
 
 
         def comparison_operator(self):
-            return self.getTypedRuleContext(SampleParser.Comparison_operatorContext,0)
+            return self.getTypedRuleContext(POKEParser.Comparison_operatorContext,0)
 
 
         def getRuleIndex(self):
-            return SampleParser.RULE_condition
+            return POKEParser.RULE_condition
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitCondition" ):
@@ -816,7 +816,7 @@ class SampleParser ( Parser ):
 
     def condition(self):
 
-        localctx = SampleParser.ConditionContext(self, self._ctx, self.state)
+        localctx = POKEParser.ConditionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 22, self.RULE_condition)
         try:
             self.enterOuterAlt(localctx, 1)
@@ -844,16 +844,16 @@ class SampleParser ( Parser ):
 
         def IDENTIFIER(self, i:int=None):
             if i is None:
-                return self.getTokens(SampleParser.IDENTIFIER)
+                return self.getTokens(POKEParser.IDENTIFIER)
             else:
-                return self.getToken(SampleParser.IDENTIFIER, i)
+                return self.getToken(POKEParser.IDENTIFIER, i)
 
         def value(self):
-            return self.getTypedRuleContext(SampleParser.ValueContext,0)
+            return self.getTypedRuleContext(POKEParser.ValueContext,0)
 
 
         def getRuleIndex(self):
-            return SampleParser.RULE_expression
+            return POKEParser.RULE_expression
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitExpression" ):
@@ -866,22 +866,22 @@ class SampleParser ( Parser ):
 
     def expression(self):
 
-        localctx = SampleParser.ExpressionContext(self, self._ctx, self.state)
+        localctx = POKEParser.ExpressionContext(self, self._ctx, self.state)
         self.enterRule(localctx, 24, self.RULE_expression)
         try:
             self.state = 125
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [SampleParser.IDENTIFIER]:
+            if token in [POKEParser.IDENTIFIER]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 121
-                self.match(SampleParser.IDENTIFIER)
+                self.match(POKEParser.IDENTIFIER)
                 self.state = 122
-                self.match(SampleParser.T__8)
+                self.match(POKEParser.T__8)
                 self.state = 123
-                self.match(SampleParser.IDENTIFIER)
+                self.match(POKEParser.IDENTIFIER)
                 pass
-            elif token in [SampleParser.STRING, SampleParser.INT, SampleParser.FLOAT, SampleParser.BOOLEAN]:
+            elif token in [POKEParser.STRING, POKEParser.INT, POKEParser.FLOAT, POKEParser.BOOLEAN]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 124
                 self.value()
@@ -907,7 +907,7 @@ class SampleParser ( Parser ):
 
 
         def getRuleIndex(self):
-            return SampleParser.RULE_comparison_operator
+            return POKEParser.RULE_comparison_operator
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitComparison_operator" ):
@@ -920,14 +920,14 @@ class SampleParser ( Parser ):
 
     def comparison_operator(self):
 
-        localctx = SampleParser.Comparison_operatorContext(self, self._ctx, self.state)
+        localctx = POKEParser.Comparison_operatorContext(self, self._ctx, self.state)
         self.enterRule(localctx, 26, self.RULE_comparison_operator)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 127
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SampleParser.T__13) | (1 << SampleParser.T__14) | (1 << SampleParser.T__15) | (1 << SampleParser.T__16))) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << POKEParser.T__13) | (1 << POKEParser.T__14) | (1 << POKEParser.T__15) | (1 << POKEParser.T__16))) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)
@@ -949,19 +949,19 @@ class SampleParser ( Parser ):
             self.parser = parser
 
         def STRING(self):
-            return self.getToken(SampleParser.STRING, 0)
+            return self.getToken(POKEParser.STRING, 0)
 
         def INT(self):
-            return self.getToken(SampleParser.INT, 0)
+            return self.getToken(POKEParser.INT, 0)
 
         def FLOAT(self):
-            return self.getToken(SampleParser.FLOAT, 0)
+            return self.getToken(POKEParser.FLOAT, 0)
 
         def BOOLEAN(self):
-            return self.getToken(SampleParser.BOOLEAN, 0)
+            return self.getToken(POKEParser.BOOLEAN, 0)
 
         def getRuleIndex(self):
-            return SampleParser.RULE_value
+            return POKEParser.RULE_value
 
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitValue" ):
@@ -974,14 +974,14 @@ class SampleParser ( Parser ):
 
     def value(self):
 
-        localctx = SampleParser.ValueContext(self, self._ctx, self.state)
+        localctx = POKEParser.ValueContext(self, self._ctx, self.state)
         self.enterRule(localctx, 28, self.RULE_value)
         self._la = 0 # Token type
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 129
             _la = self._input.LA(1)
-            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << SampleParser.STRING) | (1 << SampleParser.INT) | (1 << SampleParser.FLOAT) | (1 << SampleParser.BOOLEAN))) != 0)):
+            if not((((_la) & ~0x3f) == 0 and ((1 << _la) & ((1 << POKEParser.STRING) | (1 << POKEParser.INT) | (1 << POKEParser.FLOAT) | (1 << POKEParser.BOOLEAN))) != 0)):
                 self._errHandler.recoverInline(self)
             else:
                 self._errHandler.reportMatch(self)

@@ -1,7 +1,7 @@
-grammar Sample;
+grammar POKE;
 
 // Parser rules
-program         : statement*;
+script         : statement*;
 
 statement       : pokemon
                 | move

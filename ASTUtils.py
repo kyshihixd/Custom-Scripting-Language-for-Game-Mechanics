@@ -1,78 +1,99 @@
 from dataclasses import dataclass
-from abc import ABC, abstractmethod
 from typing import List
 
-# Base Class for AST Nodes
-class AST(ABC):
-    @abstractmethod
-    def accept(self, v):
-        pass
-
-# Program Node
 @dataclass
-class Prog(AST):
-    expr: AST
+class Script:
+    statements: List
+    def accept(self, visitor):
+        return visitor.visitScript(self)
 
-    def __str__(self):
-        return f"Prog({self.expr})"
 
-    def accept(self, v):
-        return v.visitProg(self)
-
-# Binary Operation Node
 @dataclass
-class BinOp(AST):
-    op: str
-    left: AST
-    right: AST
-
-    def __str__(self):
-        return f"BinOp(\"{self.op}\", {self.left}, {self.right})"
-
-    def accept(self, v):
-        return v.visitBinOp(self)
-
-# Integer Literal Node
-@dataclass
-class Int(AST):
-    value: int
-
-    def __str__(self):
-        return f"Int({self.value})"
-
-    def accept(self, v):
-        return v.visitInt(self)
-
-# Variable Reference Node
-@dataclass
-class Var(AST):
+class Pokemon:
     name: str
+    attributes: List
+    def accept(self, visitor):
+        return visitor.visitPokemon(self)
 
-    def __str__(self):
-        return f"Var(\"{self.name}\")"
-
-    def accept(self, v):
-        return v.visitVar(self)
-
-# Parentheses Node
 @dataclass
-class Parens(AST):
-    expr: AST
+class Move:
+    name: str
+    attributes: List
+    def accept(self, visitor):
+        return visitor.visitMove(self)
 
-    def __str__(self):
-        return f"Parens({self.expr})"
-
-    def accept(self, v):
-        return v.visitParens(self)
-
-# **New Node: Function Call**
 @dataclass
-class FuncCall(AST):
-    func_name: str
-    args: List[AST]
+class Attribute:
+    key: str
+    value: any
+    def accept(self, visitor):
+        return visitor.visitAttribute(self)
 
+@dataclass
+class ActionStatement:
+    pokemon: str
+    move: str
+    def accept(self, visitor):
+        return visitor.visitActionStatement(self)
+
+@dataclass
+class UpdateAttribute:
+    target: str
+    attribute: str
+    value: any
+    def accept(self, visitor):
+        return visitor.visitUpdateAttribute(self)
+
+@dataclass
+class ConditionStatement:
+    conditions: List
+    body: List
+    def accept(self, visitor):
+        return visitor.visitConditionStatement(self)
+
+@dataclass
+class Condition:
+    left: any
+    operator: str
+    right: any
+    def accept(self, visitor):
+        return visitor.visitCondition(self)
+
+@dataclass
+class AttributeAccess:
+    pokemon: str
+    attribute: str
+    def accept(self, visitor):
+        return visitor.visitAttributeAccess(self)
+
+@dataclass
+class String:
+    value: str
     def __str__(self):
-        return f"FuncCall(\"{self.func_name}\", {self.args})"
+        return self.value
+    def accept(self, visitor):
+        return visitor.visitString(self)
 
-    def accept(self, v):
-        return v.visitFuncCall(self)
+@dataclass
+class Int:
+    value: int
+    def __str__(self):
+        return str(self.value)
+    def accept(self, visitor):
+        return visitor.visitInt(self)
+
+@dataclass
+class Float:
+    value: float
+    def __str__(self):
+        return str(self.value)
+    def accept(self, visitor):
+        return visitor.visitFloat(self)
+
+@dataclass
+class Boolean:
+    value: bool
+    def accept(self, visitor):
+        return visitor.visitBoolean(self)
+    def accept(self, visitor):
+        return visitor.visitBoolean(self)

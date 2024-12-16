@@ -1,4 +1,4 @@
-// Generated from c:/Users/Administrator/Desktop/PPL/lab/Sample_Function_Call/Sample.g4 by ANTLR 4.13.1
+// Generated from c:/Users/Administrator/Desktop/PPL/lab/Sample_Function_Call/POKE.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue"})
-public class SampleParser extends Parser {
+public class POKEParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.13.1", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
@@ -85,7 +85,7 @@ public class SampleParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "Sample.g4"; }
+	public String getGrammarFileName() { return "POKE.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -96,7 +96,7 @@ public class SampleParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-	public SampleParser(TokenStream input) {
+	public POKEParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
@@ -231,7 +231,7 @@ public class SampleParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class PokemonContext extends ParserRuleContext {
-		public TerminalNode IDENTIFIER() { return getToken(SampleParser.IDENTIFIER, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(POKEParser.IDENTIFIER, 0); }
 		public Pokemon_bodyContext pokemon_body() {
 			return getRuleContext(Pokemon_bodyContext.class,0);
 		}
@@ -330,7 +330,7 @@ public class SampleParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class Pokemon_attributeContext extends ParserRuleContext {
-		public TerminalNode IDENTIFIER() { return getToken(SampleParser.IDENTIFIER, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(POKEParser.IDENTIFIER, 0); }
 		public ValueContext value() {
 			return getRuleContext(ValueContext.class,0);
 		}
@@ -367,7 +367,7 @@ public class SampleParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class MoveContext extends ParserRuleContext {
-		public TerminalNode IDENTIFIER() { return getToken(SampleParser.IDENTIFIER, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(POKEParser.IDENTIFIER, 0); }
 		public Move_bodyContext move_body() {
 			return getRuleContext(Move_bodyContext.class,0);
 		}
@@ -466,7 +466,7 @@ public class SampleParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class Move_attributeContext extends ParserRuleContext {
-		public TerminalNode IDENTIFIER() { return getToken(SampleParser.IDENTIFIER, 0); }
+		public TerminalNode IDENTIFIER() { return getToken(POKEParser.IDENTIFIER, 0); }
 		public ValueContext value() {
 			return getRuleContext(ValueContext.class,0);
 		}
@@ -503,9 +503,9 @@ public class SampleParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class Action_statementContext extends ParserRuleContext {
-		public List<TerminalNode> IDENTIFIER() { return getTokens(SampleParser.IDENTIFIER); }
+		public List<TerminalNode> IDENTIFIER() { return getTokens(POKEParser.IDENTIFIER); }
 		public TerminalNode IDENTIFIER(int i) {
-			return getToken(SampleParser.IDENTIFIER, i);
+			return getToken(POKEParser.IDENTIFIER, i);
 		}
 		public Action_statementContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -540,9 +540,9 @@ public class SampleParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class Update_attr_statementContext extends ParserRuleContext {
-		public List<TerminalNode> IDENTIFIER() { return getTokens(SampleParser.IDENTIFIER); }
+		public List<TerminalNode> IDENTIFIER() { return getTokens(POKEParser.IDENTIFIER); }
 		public TerminalNode IDENTIFIER(int i) {
-			return getToken(SampleParser.IDENTIFIER, i);
+			return getToken(POKEParser.IDENTIFIER, i);
 		}
 		public ValueContext value() {
 			return getRuleContext(ValueContext.class,0);
@@ -728,9 +728,9 @@ public class SampleParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class ExpressionContext extends ParserRuleContext {
-		public List<TerminalNode> IDENTIFIER() { return getTokens(SampleParser.IDENTIFIER); }
+		public List<TerminalNode> IDENTIFIER() { return getTokens(POKEParser.IDENTIFIER); }
 		public TerminalNode IDENTIFIER(int i) {
-			return getToken(SampleParser.IDENTIFIER, i);
+			return getToken(POKEParser.IDENTIFIER, i);
 		}
 		public ValueContext value() {
 			return getRuleContext(ValueContext.class,0);
@@ -824,10 +824,10 @@ public class SampleParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class ValueContext extends ParserRuleContext {
-		public TerminalNode STRING() { return getToken(SampleParser.STRING, 0); }
-		public TerminalNode INT() { return getToken(SampleParser.INT, 0); }
-		public TerminalNode FLOAT() { return getToken(SampleParser.FLOAT, 0); }
-		public TerminalNode BOOLEAN() { return getToken(SampleParser.BOOLEAN, 0); }
+		public TerminalNode STRING() { return getToken(POKEParser.STRING, 0); }
+		public TerminalNode INT() { return getToken(POKEParser.INT, 0); }
+		public TerminalNode FLOAT() { return getToken(POKEParser.FLOAT, 0); }
+		public TerminalNode BOOLEAN() { return getToken(POKEParser.BOOLEAN, 0); }
 		public ValueContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}

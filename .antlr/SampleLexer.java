@@ -1,4 +1,4 @@
-// Generated from c:/Users/Administrator/Desktop/PPL/lab/Sample_Function_Call/Sample.g4 by ANTLR 4.13.1
+// Generated from c:/Users/Administrator/Desktop/PPL/lab/Sample_Function_Call/POKE.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;
@@ -92,7 +92,7 @@ public class SampleLexer extends Lexer {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "Sample.g4"; }
+	public String getGrammarFileName() { return "POKE.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }

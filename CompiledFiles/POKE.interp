@@ -53,7 +53,7 @@ WHITESPACE
 COMMENT
 
 rule names:
-program
+script
 statement
 pokemon
 pokemon_body

@@ -1,4 +1,4 @@
-# Generated from Sample.g4 by ANTLR 4.9.2
+# Generated from POKE.g4 by ANTLR 4.9.2
 from antlr4 import *
 from io import StringIO
 import sys
@@ -77,7 +77,7 @@ def serializedATN():
         return buf.getvalue()
 
 
-class SampleLexer(Lexer):
+class POKELexer(Lexer):
 
     atn = ATNDeserializer().deserialize(serializedATN())
 
@@ -126,7 +126,7 @@ class SampleLexer(Lexer):
                   "T__14", "T__15", "T__16", "IDENTIFIER", "STRING", "INT", 
                   "FLOAT", "BOOLEAN", "WHITESPACE", "COMMENT" ]
 
-    grammarFileName = "Sample.g4"
+    grammarFileName = "POKE.g4"
 
     def __init__(self, input=None, output:TextIO = sys.stdout):
         super().__init__(input, output)

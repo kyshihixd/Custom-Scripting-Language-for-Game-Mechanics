@@ -4,15 +4,14 @@ import unittest
 from antlr4 import *
 from tkinter import Tk, Text, Button, Label, scrolledtext, END
 
-from CompiledFiles.SampleLexer import SampleLexer
-from CompiledFiles.SampleParser import SampleParser
+from CompiledFiles.POKELexer import POKELexer
+from CompiledFiles.POKEParser import POKEParser
 from antlr4.error.ErrorListener import ErrorListener
-from ASTGeneration import ASTGeneration
 # Define your variables
 DIR = os.path.dirname(__file__)
 ANTLR_JAR = 'C:/Users/Administrator/Desktop/PPL/lab/antlr4-4.9.2-complete.jar' # your location is going here
 CPL_Dest = 'CompiledFiles'
-SRC = 'Sample.g4'
+SRC = 'POKE.g4'
 TESTS = os.path.join(DIR, './tests')
 
 def printUsage():
@@ -61,21 +60,21 @@ class runTree:
             input_stream = InputStream(input_text)
 
             # Lexer and Token Stream
-            lexer = SampleLexer(input_stream)
+            lexer = POKELexer(input_stream)
             token_stream = CommonTokenStream(lexer)
 
             # Parser
-            parser = SampleParser(token_stream)
+            parser = POKEParser(token_stream)
             parser.removeErrorListeners()
             parser.addErrorListener(self.error_listener)
 
             # Parse the input using the 'program' rule
-            tree = parser.program()
+            tree = parser.script()
 
             # Check for syntax errors
             if self.error_listener.errors:
                 return {"success": False, "errors": self.error_listener.errors}
-
+            from ASTGeneration import ASTGeneration
             # Generate and return the parse tree and AST
             parse_tree_str = tree.toStringTree(recog=parser)
             ast_generator = ASTGeneration()
@@ -95,8 +94,8 @@ class runTree:
 def runTest():
     print('Running testcases...')
        
-    from CompiledFiles.SampleLexer import SampleLexer
-    from CompiledFiles.SampleParser import SampleParser
+    from CompiledFiles.POKELexer import POKELexer
+    from CompiledFiles.POKEParser import POKEParser
     from antlr4.error.ErrorListener import ErrorListener
 
     class CustomErrorListener(ErrorListener):
@@ -108,14 +107,14 @@ def runTest():
     inputFile = os.path.join(DIR, './tests', filename)    
     
     # Reset the input stream for parsing and catch the error
-    lexer = SampleLexer(FileStream(inputFile))
+    lexer = POKELexer(FileStream(inputFile))
     token_stream = CommonTokenStream(lexer)
 
-    parser = SampleParser(token_stream)   
+    parser = POKEParser(token_stream)   
     parser.removeErrorListeners()
     parser.addErrorListener(CustomErrorListener())    
     try:
-        parser.program()
+        parser.script()
         print("Input accepted")
     except SystemExit:        
         pass
@@ -125,19 +124,21 @@ def runTest():
     
     
     input_stream = FileStream(inputFile)
-    lexer = SampleLexer(input_stream)
+    lexer = POKELexer(input_stream)
     stream = CommonTokenStream(lexer)
-    parser = SampleParser(stream)
-    tree = parser.program()  
+    parser = POKEParser(stream)
+    tree = parser.script()  
     print(tree.toStringTree(recog=parser))
     
-
+    from ASTGeneration import ASTGeneration
     ast_generator = ASTGeneration()
 
     asttree = tree.accept(ast_generator)    
     print('This is ast string: ', asttree)
     
-    runCode(asttree)
+    from CodeRunner import CodeRunner
+    code_runner = CodeRunner()
+    result = asttree.accept(code_runner)
     
 
 def main(argv):
