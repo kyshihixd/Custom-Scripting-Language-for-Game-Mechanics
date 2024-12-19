@@ -43,15 +43,8 @@ class runTree:
 
     def __init__(self):
         self.error_listener = self.CustomErrorListener()
-    class CustomErrorListener(ErrorListener):
-        def __init__(self):
-            self.errors = []
-
-        def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
-            self.errors.append(f"Syntax Error: {msg} (Line {line}, Column {column})")
-
-    def __init__(self):
-        self.error_listener = self.CustomErrorListener()
+        from CodeRunner import CodeRunner  # Import CodeRunner once
+        self.code_runner = CodeRunner()
 
     def process_input(self, input_text):
         """Processes the input text using ANTLR."""
@@ -68,28 +61,33 @@ class runTree:
             parser.removeErrorListeners()
             parser.addErrorListener(self.error_listener)
 
-            # Parse the input using the 'program' rule
+            # Parse the input using the 'script' rule
             tree = parser.script()
 
             # Check for syntax errors
             if self.error_listener.errors:
                 return {"success": False, "errors": self.error_listener.errors}
+
             from ASTGeneration import ASTGeneration
-            # Generate and return the parse tree and AST
+            # Generate AST
             parse_tree_str = tree.toStringTree(recog=parser)
             ast_generator = ASTGeneration()
             ast_tree = tree.accept(ast_generator)
-            from CodeRunner import CodeRunner
-            code_runner = CodeRunner()
-            result = ast_tree.accept(code_runner)
+
+            # Execute the AST using CodeRunner
+            result = ast_tree.accept(self.code_runner)
+
+            # Return results
             return {
                 "success": True,
                 "parse_tree": parse_tree_str,
                 "ast": ast_tree,
                 "result": result
             }
+
         except Exception as e:
             return {"success": False, "errors": [str(e)]}
+
         
 def runTest():
     print('Running testcases...')

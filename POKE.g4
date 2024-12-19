@@ -8,6 +8,7 @@ statement       : pokemon
                 | action_statement
                 | condition_statement
                 | update_attr_statement
+                | status
                 ;
 
 pokemon: 'pokemon' IDENTIFIER '{' pokemon_body '}';
@@ -19,16 +20,21 @@ move : 'move' IDENTIFIER '{' move_body '}';
 move_body       : (move_attribute (';')?)*;
 move_attribute  : IDENTIFIER ':' value;
 
-action_statement: IDENTIFIER 'uses' IDENTIFIER;
 
-update_attr_statement: 'update' IDENTIFIER '.' IDENTIFIER 'to' value ';';
+action_statement: IDENTIFIER 'uses' IDENTIFIER 'on' IDENTIFIER;
+
+trigger_definition: 'trigger' IDENTIFIER '{' (trigger_action ';')* '}';
+trigger_action: target_operator;
+target_operator: 'target''.' IDENTIFIER ('+=' | '-=' | '=' | '*=' | '/=') expression;
+
+status: 'status' IDENTIFIER;
+update_attr_statement: 'update' IDENTIFIER '.' IDENTIFIER 'to' expression;
+
 condition_statement: 'if' '(' (condition(';')?)* ')' '{' (statement(';')?)* '}';
 condition       : expression comparison_operator expression;
-
 expression      : IDENTIFIER'.'IDENTIFIER
                 | value
                 ;
-
 comparison_operator
                 : '<' | '>' | '==' | '!=';
 

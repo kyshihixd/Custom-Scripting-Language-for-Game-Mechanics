@@ -25,17 +25,22 @@ class ASTGeneration(POKEVisitor):
         key = ctx.IDENTIFIER().getText()
         value = ctx.value().accept(self)
         return Attribute(key, value)
+    
+    def visitStatus(self, ctx: POKEParser.StatusContext):
+        name = ctx.IDENTIFIER().getText()
+        return Status(name)
 
     def visitAction_statement(self, ctx: POKEParser.Action_statementContext):
         pokemon = ctx.IDENTIFIER(0).getText()
         move = ctx.IDENTIFIER(1).getText()
-        return ActionStatement(pokemon, move)
+        target = ctx.IDENTIFIER(2).getText()
+        return ActionStatement(pokemon, move, target)
 
     def visitUpdate_attr_statement(self, ctx: POKEParser.Update_attr_statementContext):
         target = ctx.IDENTIFIER(0).getText()
         attribute = ctx.IDENTIFIER(1).getText()
-        value = ctx.value().accept(self)
-        return UpdateAttribute(target, attribute, value)
+        expression = ctx.expression().accept(self)
+        return UpdateAttribute(target, attribute, expression)
 
     def visitCondition_statement(self, ctx: POKEParser.Condition_statementContext):
         conditions = [cond.accept(self) for cond in ctx.condition()]
@@ -50,8 +55,11 @@ class ASTGeneration(POKEVisitor):
 
     def visitExpression(self, ctx: POKEParser.ExpressionContext):
         if ctx.IDENTIFIER():
-            return AttributeAccess(ctx.IDENTIFIER(0).getText(), ctx.IDENTIFIER(1).getText())
-        return ctx.value().accept(self)
+            entity = ctx.IDENTIFIER(0).getText()
+            attribute = ctx.IDENTIFIER(1).getText()
+            return AttributeAccess(entity, attribute)
+        else:
+            return ctx.value().accept(self)
 
     def visitValue(self, ctx: POKEParser.ValueContext):
         if ctx.STRING():

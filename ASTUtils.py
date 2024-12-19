@@ -33,21 +33,48 @@ class Attribute:
 class ActionStatement:
     pokemon: str
     move: str
+    target: str
     def accept(self, visitor):
         return visitor.visitActionStatement(self)
 
 @dataclass
+class TriggerDefinition:
+    name: str
+    actions: List
+
+    def accept(self, visitor):
+        return visitor.visitTriggerDefinition(self)
+
+
+@dataclass
+class TriggerAction:
+    operation: str
+    target: str
+    value: any = None
+
+    def accept(self, visitor):
+        return visitor.visitTriggerAction(self)
+
+@dataclass
+class Status:
+    name: str
+    def __str__(self):
+        return self.name
+    def accept(self, visitor):
+        return visitor.visitStatus(self)
+    
+@dataclass
 class UpdateAttribute:
     target: str
     attribute: str
-    value: any
+    expression: any
     def accept(self, visitor):
         return visitor.visitUpdateAttribute(self)
 
 @dataclass
 class ConditionStatement:
     conditions: List
-    body: List
+    statements: List
     def accept(self, visitor):
         return visitor.visitConditionStatement(self)
 
@@ -93,7 +120,7 @@ class Float:
 @dataclass
 class Boolean:
     value: bool
-    def accept(self, visitor):
-        return visitor.visitBoolean(self)
+    def __str__(self):
+        return str(self.value)
     def accept(self, visitor):
         return visitor.visitBoolean(self)

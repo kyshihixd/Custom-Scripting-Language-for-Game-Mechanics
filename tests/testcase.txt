@@ -1,11 +1,17 @@
 pokemon Pikachu {
     hp: 100;
-    speed: 50;
+    power: 30;
 }
 
 pokemon Charmander {
     hp: 120;
-    speed: 45;
+    power: 45;
+    type: "fire";
+}
+
+pokemon Bulbasaur {
+    hp: 125;
+    power: 40;
 }
 
 move Thunderbolt {
@@ -16,5 +22,15 @@ move Flamethrower {
     power: 30;
 }
 
-Pikachu uses Thunderbolt;
-Charmander uses Flamethrower;
+move Leafblade {
+    power: 30;
+}
+
+status Charmander
+update Charmander.power to Pikachu.power
+status Charmander
+update Charmander.power to 100
+status Charmander
+
+Pikachu uses Thunderbolt on Charmander
+status Charmander
