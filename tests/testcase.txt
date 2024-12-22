@@ -31,6 +31,17 @@ update Charmander.power to Pikachu.power
 status Charmander
 update Charmander.power to 100
 status Charmander
+status Pikachu
+trigger Thunderbolt (Pikachu, Charmander){
+    Pikachu.hp = Thunderbolt.power + Charmander.power;
+    if (Pikachu.hp > 100){
+        Pikachu.power = Pikachu.power +25;
+    }
+    else {
+        Pikachu.power = Pikachu.power -35;
+    }
+}
 
 Pikachu uses Thunderbolt on Charmander
+status Pikachu
 status Charmander

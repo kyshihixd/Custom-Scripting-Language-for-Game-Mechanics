@@ -9,6 +9,7 @@ statement       : pokemon
                 | condition_statement
                 | update_attr_statement
                 | status
+                | trigger_statement
                 ;
 
 pokemon: 'pokemon' IDENTIFIER '{' pokemon_body '}';
@@ -23,14 +24,20 @@ move_attribute  : IDENTIFIER ':' value;
 
 action_statement: IDENTIFIER 'uses' IDENTIFIER 'on' IDENTIFIER;
 
-trigger_definition: 'trigger' IDENTIFIER '{' (trigger_action ';')* '}';
-trigger_action: target_operator;
-target_operator: 'target''.' IDENTIFIER ('+=' | '-=' | '=' | '*=' | '/=') expression;
+trigger_statement: 'trigger' IDENTIFIER '('IDENTIFIER ',' IDENTIFIER')' '{' ((trigger_action | trigger_condition) ';')* '}';
+trigger_condition: 'if' '(' condition ')' '{' (trigger_action ';')* '}' ('else' '{' (trigger_else ';')* '}')? ;
+trigger_else: trigger_action;
+trigger_action: IDENTIFIER '.' IDENTIFIER '=' arithmatic;
+arithmatic: expression ('+' | '-') term | term;
+term: term ('/' | '*') factor | factor;
+factor:'(' expression ')'| value | IDENTIFIER'.'IDENTIFIER;
+
+
 
 status: 'status' IDENTIFIER;
 update_attr_statement: 'update' IDENTIFIER '.' IDENTIFIER 'to' expression;
 
-condition_statement: 'if' '(' (condition(';')?)* ')' '{' (statement(';')?)* '}';
+condition_statement: 'if' '(' (condition(';')?)* ')' '{' ((action_statement|condition_statement|update_attr_statement|status)(';')?)* '}';
 condition       : expression comparison_operator expression;
 expression      : IDENTIFIER'.'IDENTIFIER
                 | value

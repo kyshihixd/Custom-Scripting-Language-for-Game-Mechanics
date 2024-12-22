@@ -64,13 +64,28 @@ class POKEVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by POKEParser#trigger_else.
+    def visitTrigger_else(self, ctx:POKEParser.Trigger_elseContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by POKEParser#trigger_action.
     def visitTrigger_action(self, ctx:POKEParser.Trigger_actionContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by POKEParser#arithmetic_expression.
-    def visitArithmetic_expression(self, ctx:POKEParser.Arithmetic_expressionContext):
+    # Visit a parse tree produced by POKEParser#arithmatic.
+    def visitArithmatic(self, ctx:POKEParser.ArithmaticContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by POKEParser#term.
+    def visitTerm(self, ctx:POKEParser.TermContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by POKEParser#factor.
+    def visitFactor(self, ctx:POKEParser.FactorContext):
         return self.visitChildren(ctx)
 
 

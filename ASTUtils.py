@@ -38,24 +38,6 @@ class ActionStatement:
         return visitor.visitActionStatement(self)
 
 @dataclass
-class TriggerDefinition:
-    name: str
-    actions: List
-
-    def accept(self, visitor):
-        return visitor.visitTriggerDefinition(self)
-
-
-@dataclass
-class TriggerAction:
-    operation: str
-    target: str
-    value: any = None
-
-    def accept(self, visitor):
-        return visitor.visitTriggerAction(self)
-
-@dataclass
 class Status:
     name: str
     def __str__(self):
@@ -88,7 +70,7 @@ class Condition:
 
 @dataclass
 class AttributeAccess:
-    pokemon: str
+    entity: str
     attribute: str
     def accept(self, visitor):
         return visitor.visitAttributeAccess(self)
@@ -124,3 +106,58 @@ class Boolean:
         return str(self.value)
     def accept(self, visitor):
         return visitor.visitBoolean(self)
+    
+@dataclass
+class TriggerStatement:
+    move: str
+    user: str
+    target: str
+    action: List
+    def accept(self, visitor):
+        return visitor.visitTriggerStatement(self)
+    
+@dataclass
+class TriggerCondition:
+    conditions: List
+    if_: List
+    else_: List
+
+    def accept(self, visitor):
+        return visitor.visitTriggerCondition(self)
+    
+@dataclass
+class TriggerElse:
+    actions: any
+    def accept(self, visitor):
+        return visitor.visitTriggerElse(self)
+
+@dataclass
+class TriggerAction:
+    target: str
+    attribute: str
+    arithmetic: any
+
+    def accept(self, visitor):
+        return visitor.visitTriggerAction(self)
+    
+@dataclass
+class ArithmeticExpression:
+    left: any
+    operator: str
+    right: any
+    def accept(self, visitor):
+        return visitor.visitArithmeticExpression(self)
+
+@dataclass
+class ArithmeticTerm:
+    left: any
+    operator: str
+    right: any
+    def accept(self, visitor):
+        return visitor.visitArithmeticTerm(self)
+
+@dataclass
+class ArithmeticFactor:
+    expression: any
+    def accept(self, visitor):
+        return visitor.visitArithmeticFactor(self)

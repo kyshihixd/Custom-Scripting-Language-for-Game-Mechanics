@@ -70,3 +70,54 @@ class ASTGeneration(POKEVisitor):
             return Float(float(ctx.FLOAT().getText()))
         elif ctx.BOOLEAN():
             return Boolean(ctx.BOOLEAN().getText() == "true")
+
+    def visitTrigger_statement(self, ctx: POKEParser.Trigger_statementContext):
+        move = ctx.IDENTIFIER(0).getText()
+        user = ctx.IDENTIFIER(1).getText()
+        target = ctx.IDENTIFIER(2).getText()
+        actions = [action.accept(self) for action in ctx.trigger_action() + ctx.trigger_condition()]
+        return TriggerStatement(move,user, target, actions)
+    
+    def visitTrigger_condition(self, ctx: POKEParser.Trigger_conditionContext):
+        condition = ctx.condition().accept(self)
+        if_body = [action.accept(self) for action in ctx.trigger_action()]
+        else_body = None
+        if ctx.trigger_else():
+            else_body = [action.accept(self) for action in ctx.trigger_else()]
+        return TriggerCondition(condition, if_body, else_body)
+
+    def visitTrigger_else(self, ctx: POKEParser.Trigger_elseContext):
+        actions = ctx.trigger_action().accept(self)
+        return TriggerElse(actions)
+    
+    def visitTrigger_action(self, ctx: POKEParser.Trigger_actionContext):
+        entity = ctx.IDENTIFIER(0).getText()
+        attribute = ctx.IDENTIFIER(1).getText()
+        arithmetic = ctx.arithmatic().accept(self)
+        return TriggerAction(entity, attribute, arithmetic)
+
+    def visitArithmatic(self, ctx: POKEParser.ArithmaticContext):
+        if ctx.getChildCount() == 1:
+           return ctx.term().accept(self)
+        else:
+           left = ctx.expression().accept(self)
+           operator = ctx.getChild(1).getText()
+           right = ctx.term().accept(self)
+           return ArithmeticExpression(left, operator, right)
+    
+    def visitTerm(self, ctx: POKEParser.TermContext):
+        if ctx.getChildCount() == 1:
+                return ctx.factor().accept(self)
+        else:
+                left = ctx.term().accept(self)
+                operator = ctx.getChild(1).getText()
+                right = ctx.factor().accept(self)
+                return ArithmeticTerm(left, operator, right)
+
+    def visitFactor(self, ctx: POKEParser.FactorContext):
+        if ctx.expression():
+            return ctx.expression().accept(self)
+        elif ctx.IDENTIFIER():
+            return AttributeAccess(entity = ctx.IDENTIFIER(0).getText(), attribute = ctx.IDENTIFIER(1).getText())
+        else:
+            return ctx.value().accept(self)

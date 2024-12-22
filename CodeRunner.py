@@ -5,6 +5,7 @@ class CodeRunner:
     def __init__(self):
         self.pokemon = {}
         self.moves = {}
+        self.triggers = {}
 
     def visitScript(self, ctx: Script):
         results = []
@@ -23,14 +24,17 @@ class CodeRunner:
         self.moves[ctx.name] = attributes
 
     def visitActionStatement(self, ctx: ActionStatement):
-        pokemon = self.pokemon[ctx.pokemon]
-        move = self.moves[ctx.move]
-        damage = (move["power"].value + pokemon["power"].value)
-        print(f"{ctx.pokemon} uses {ctx.move}, dealing {damage} damage to {ctx.target}!")
-        self.pokemon[ctx.target]["hp"].value -= damage
-        print(f"{ctx.target} is now {self.pokemon[ctx.target]['hp']} hp")
-        return f"{ctx.pokemon} uses {ctx.move}, dealing {damage} damage to {ctx.target}!" + f"{ctx.target} is now {self.pokemon[ctx.target]['hp']} hp"
+        trigger_name = ctx.move
+
+        if (ctx.pokemon != self.triggers[trigger_name].user or ctx.move != self.triggers[trigger_name].move or ctx.target != self.triggers[trigger_name].target):
+            raise Exception(f"Unknown target: unknown trigger")
+
+        if trigger_name in self.triggers:
+            for action in self.triggers[trigger_name].action:
+                
+                action.accept(self)
         
+
     def visitStatus(self, ctx: Status):
         name = ctx.name
         if name in self.pokemon:
@@ -69,8 +73,13 @@ class CodeRunner:
             statement.accept(self)
 
     def visitCondition(self, ctx: Condition):
-        left_value = ctx.left.accept(self).value
-        right_value = ctx.right.accept(self).value
+        if isinstance(ctx.left.accept(self), int):
+            left_value = ctx.left.accept(self)
+        else: left_value = ctx.left.accept(self).value
+        
+        if isinstance(ctx.right.accept(self),int):
+            right_value = ctx.right.accept(self)
+        else: right_value = ctx.right.accept(self).value
 
         if ctx.operator == "<":
             return left_value < right_value
@@ -84,27 +93,72 @@ class CodeRunner:
             raise Exception(f"Unknown comparison operator: {ctx.operator}")
 
     def visitAttributeAccess(self, ctx: AttributeAccess):
-        entity_name = ctx.pokemon  # This can refer to either Pokémon or a Move
+        entity_name = ctx.entity 
         attribute = ctx.attribute
-
-        # Check Pokémon dictionary
         if entity_name in self.pokemon:
             entity = self.pokemon[entity_name]
-        # Check Moves dictionary
         elif entity_name in self.moves:
             entity = self.moves[entity_name]
         else:
             raise Exception(f"Unknown entity: {entity_name}")
 
-        # Retrieve the attribute from the entity
         if attribute in entity:
             return entity[attribute]
         else:
             raise Exception(f"Attribute '{attribute}' not found in {entity_name}")
 
-
-
     def visitInt(self, ctx: Int): return ctx.value
     def visitFloat(self, ctx: Float): return ctx.value
     def visitString(self, ctx: String): return ctx.value
     def visitBoolean(self, ctx: Boolean): return ctx.value
+
+    def visitTriggerStatement(self, ctx: TriggerStatement):
+        self.triggers[ctx.move] = ctx
+
+    def visitTriggerCondition(self, ctx: TriggerCondition):
+        if ctx.conditions.accept(self):
+            for action in ctx.if_:
+                action.accept(self)
+        elif ctx.else_:
+            for action in ctx.else_:
+                action.accept(self)
+
+    def visitTriggerElse(self, ctx: TriggerElse):
+        ctx.actions.accept(self)
+
+    def visitTriggerAction(self, ctx: TriggerAction):
+        target_pokemon = self.pokemon[ctx.target]
+        new_value = ctx.arithmetic.accept(self)
+        target_pokemon[ctx.attribute] = new_value
+
+    def visitArithmeticExpression(self, ctx: ArithmeticExpression):
+        left_value = ctx.left.accept(self)
+        right_value = ctx.right.accept(self)
+        if isinstance(left_value, Int) or isinstance(left_value, Float) or isinstance(left_value, Boolean):
+            left_value = left_value.value
+        if isinstance(right_value, Int) or isinstance(right_value, Float) or isinstance(right_value, Boolean):
+            right_value = right_value.value
+        if ctx.operator == "+":
+            return Int(value = left_value + right_value)
+        elif ctx.operator == "-":
+            return Int(value = left_value - right_value)
+        else:
+            raise Exception("Unknown arithmetic operator")
+    
+    def visitArithmeticTerm(self, ctx: ArithmeticTerm):
+        left_value = ctx.left.accept(self)
+        right_value = ctx.right.accept(self)
+
+        if isinstance(left_value, Int) or isinstance(left_value, Float) or isinstance(left_value, Boolean):
+            left_value = left_value.value
+        if isinstance(right_value, Int) or isinstance(right_value, Float) or isinstance(right_value, Boolean):
+            right_value = right_value.value
+        if ctx.operator == "*":
+            return Int(value = left_value * right_value)
+        elif ctx.operator == "/":
+            return Int(value = left_value / right_value)
+        else:
+            raise Exception("Unknown arithmetic operator")
+
+    def visitArithmeticFactor(self, ctx: ArithmeticFactor):
+       return ctx.expression.accept(self)
