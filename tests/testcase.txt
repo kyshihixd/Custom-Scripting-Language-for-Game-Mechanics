@@ -1,6 +1,7 @@
 pokemon Pikachu {
     hp: 100;
     power: 30;
+    type: "electric";
 }
 
 pokemon Charmander {
@@ -34,12 +35,14 @@ status Charmander
 status Pikachu
 trigger Thunderbolt (Pikachu, Charmander){
     Pikachu.hp = Thunderbolt.power + Charmander.power;
+    if (Pikachu.type == "electric"){
+        Pikachu.power = Pikachu.power + 2555.5;
+    }
+
     if (Pikachu.hp > 100){
-        Pikachu.power = Pikachu.power +25;
+        Pikachu.hp = 10000;
     }
-    else {
-        Pikachu.power = Pikachu.power -35;
-    }
+
 }
 
 Pikachu uses Thunderbolt on Charmander

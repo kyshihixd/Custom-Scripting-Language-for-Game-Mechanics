@@ -75,10 +75,14 @@ class CodeRunner:
     def visitCondition(self, ctx: Condition):
         if isinstance(ctx.left.accept(self), int):
             left_value = ctx.left.accept(self)
+        elif isinstance(ctx.left.accept(self), str):
+            left_value = ctx.left.accept(self)
         else: left_value = ctx.left.accept(self).value
         
         if isinstance(ctx.right.accept(self),int):
             right_value = ctx.right.accept(self)
+        elif isinstance(ctx.right.accept(self), str):
+            right_value = ctx.right.accept(self)   
         else: right_value = ctx.right.accept(self).value
 
         if ctx.operator == "<":
