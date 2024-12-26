@@ -123,12 +123,23 @@ class CodeRunner:
         if ctx.conditions.accept(self):
             for action in ctx.if_:
                 action.accept(self)
+            return
+        elif ctx.elif_:
+            for action in ctx.elif_:
+                action.accept(self)
+            return
         elif ctx.else_:
             for action in ctx.else_:
                 action.accept(self)
+            return
 
     def visitTriggerElse(self, ctx: TriggerElse):
         ctx.actions.accept(self)
+
+    def visitTriggerElif(self, ctx: TriggerElif):
+        if ctx.condition.accept(self):
+            for action in ctx.actions:
+                action.accept(self)
 
     def visitTriggerAction(self, ctx: TriggerAction):
         target_pokemon = self.pokemon[ctx.target]

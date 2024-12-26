@@ -10,13 +10,18 @@ pokemon Charmander {
     type: "fire";
 }
 
+status Charmander
+
 pokemon Bulbasaur {
     hp: 125;
     power: 40;
+    type: "leaf";
 }
 
 move Thunderbolt {
     power: 40;
+    debuff: "paralasis";
+    type: "electric";
 }
 
 move Flamethrower {
@@ -27,24 +32,18 @@ move Leafblade {
     power: 30;
 }
 
-status Charmander
-update Charmander.power to Pikachu.power
-status Charmander
-update Charmander.power to 100
-status Charmander
-status Pikachu
+
 trigger Thunderbolt (Pikachu, Charmander){
     Pikachu.hp = Thunderbolt.power + Charmander.power;
     if (Pikachu.type == "electric"){
-        Pikachu.power = Pikachu.power + 2555.5;
+        Pikachu.power = 444;
     }
-
-    if (Pikachu.hp > 100){
-        Pikachu.hp = 10000;
+    elif (Pikachu.type == "fire"){
+        Pikachu.type = "elif";
     }
-
+    else {
+        Pikachu.type = "else";
+    }
 }
 
 Pikachu uses Thunderbolt on Charmander
-status Pikachu
-status Charmander

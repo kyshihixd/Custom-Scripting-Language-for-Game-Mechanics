@@ -64,6 +64,11 @@ class POKEVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by POKEParser#trigger_elif.
+    def visitTrigger_elif(self, ctx:POKEParser.Trigger_elifContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by POKEParser#trigger_else.
     def visitTrigger_else(self, ctx:POKEParser.Trigger_elseContext):
         return self.visitChildren(ctx)

@@ -13,19 +13,20 @@ statement       : pokemon
                 ;
 
 pokemon: 'pokemon' IDENTIFIER '{' pokemon_body '}';
-pokemon_body : (pokemon_attribute (';')?)*;
+pokemon_body : (pokemon_attribute ';')*;
 pokemon_attribute       : IDENTIFIER ':' value;
 
 
 move : 'move' IDENTIFIER '{' move_body '}';
-move_body       : (move_attribute (';')?)*;
+move_body       : (move_attribute ';')*;
 move_attribute  : IDENTIFIER ':' value;
 
 
 action_statement: IDENTIFIER 'uses' IDENTIFIER 'on' IDENTIFIER;
 
 trigger_statement: 'trigger' IDENTIFIER '('IDENTIFIER ',' IDENTIFIER')' '{' ((trigger_action | trigger_condition) ';')* '}';
-trigger_condition: 'if' '(' condition ')' '{' (trigger_action ';')* '}' ('else' '{' (trigger_else ';')* '}')? ;
+trigger_condition: 'if' '(' condition ')' '{' (trigger_action ';')* '}' (trigger_elif)* ('else' '{' (trigger_else ';')* '}')? ;
+trigger_elif: 'elif' '(' condition ')' '{' (trigger_action ';')* '}';
 trigger_else: trigger_action;
 trigger_action: IDENTIFIER '.' IDENTIFIER '=' arithmatic;
 arithmatic: expression ('+' | '-') term | term;

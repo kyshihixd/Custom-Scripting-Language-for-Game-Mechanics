@@ -33,7 +33,12 @@ def runCode(astTree):
     
     print("Result:", result)
 
+
+
+from CodeRunner import CodeRunner
+code_runner = CodeRunner()
 class runTree:
+
     class CustomErrorListener(ErrorListener):
         def __init__(self):
             self.errors = []
@@ -43,11 +48,11 @@ class runTree:
 
     def __init__(self):
         self.error_listener = self.CustomErrorListener()
-        from CodeRunner import CodeRunner  # Import CodeRunner once
-        self.code_runner = CodeRunner()
+        
 
     def process_input(self, input_text):
         """Processes the input text using ANTLR."""
+        self.error_listener.errors.clear()
         try:
             # Initialize ANTLR input stream
             input_stream = InputStream(input_text)
@@ -75,7 +80,7 @@ class runTree:
             ast_tree = tree.accept(ast_generator)
 
             # Execute the AST using CodeRunner
-            result = ast_tree.accept(self.code_runner)
+            result = ast_tree.accept(code_runner)
 
             # Return results
             return {

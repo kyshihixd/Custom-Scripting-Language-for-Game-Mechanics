@@ -120,6 +120,7 @@ class TriggerStatement:
 class TriggerCondition:
     conditions: List
     if_: List
+    elif_: List
     else_: List
 
     def accept(self, visitor):
@@ -130,6 +131,13 @@ class TriggerElse:
     actions: any
     def accept(self, visitor):
         return visitor.visitTriggerElse(self)
+    
+@dataclass
+class TriggerElif:
+    condition: any
+    actions: List
+    def accept(self, visitor):
+        return visitor.visitTriggerElif(self)
 
 @dataclass
 class TriggerAction:

@@ -82,13 +82,22 @@ class ASTGeneration(POKEVisitor):
         condition = ctx.condition().accept(self)
         if_body = [action.accept(self) for action in ctx.trigger_action()]
         else_body = None
+        elif_blocks = []
+        if ctx.trigger_elif():
+            for elif_ctx in ctx.trigger_elif():
+                elif_blocks.append(elif_ctx.accept(self))
         if ctx.trigger_else():
             else_body = [action.accept(self) for action in ctx.trigger_else()]
-        return TriggerCondition(condition, if_body, else_body)
+        return TriggerCondition(condition, if_body, elif_blocks, else_body)
 
     def visitTrigger_else(self, ctx: POKEParser.Trigger_elseContext):
         actions = ctx.trigger_action().accept(self)
         return TriggerElse(actions)
+    
+    def visitTrigger_elif(self, ctx: POKEParser.Trigger_elifContext):
+        condition = ctx.condition().accept(self)
+        actions = [action.accept(self) for action in ctx.trigger_action()]
+        return TriggerElif(condition, actions)
     
     def visitTrigger_action(self, ctx: POKEParser.Trigger_actionContext):
         entity = ctx.IDENTIFIER(0).getText()
