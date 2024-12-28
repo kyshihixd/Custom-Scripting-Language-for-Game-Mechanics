@@ -1,13 +1,17 @@
+
 pokemon Pikachu {
-    hp: 100;
+    hp: random;
     power: 30;
     type: "electric";
 }
+
+status Pikachu
 
 pokemon Charmander {
     hp: 120;
     power: 45;
     type: "fire";
+    state: "No";
 }
 
 status Charmander
@@ -34,16 +38,21 @@ move Leafblade {
 
 
 trigger Thunderbolt (Pikachu, Charmander){
-    Pikachu.hp = Thunderbolt.power + Charmander.power;
-    if (Pikachu.type == "electric"){
-        Pikachu.power = 444;
-    }
-    elif (Pikachu.type == "fire"){
-        Pikachu.type = "elif";
-    }
-    else {
-        Pikachu.type = "else";
+    Charmander.hp = (Thunderbolt.power + Pikachu.power)*0.5 ;
+    if (random > 50){
+        Charmander.state = Thunderbolt.debuff;
     }
 }
 
 Pikachu uses Thunderbolt on Charmander
+status Pikachu
+status Charmander
+
+trigger Flamethrower (Charmander, Pikachu){
+    if (Charmander.state == "paralasis"){
+        Charmander.hp = Charmander.hp -25;
+    }
+}
+
+Charmander uses Flamethrower on Pikachu
+status Charmander

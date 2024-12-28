@@ -1,7 +1,7 @@
 from CompiledFiles.POKEVisitor import POKEVisitor
 from CompiledFiles.POKEParser import POKEParser
 from ASTUtils import *
-
+import random
 class ASTGeneration(POKEVisitor):
     def visitScript(self, ctx: POKEParser.ScriptContext):
         return Script([stmt.accept(self) for stmt in ctx.statement()])
@@ -42,10 +42,6 @@ class ASTGeneration(POKEVisitor):
         expression = ctx.expression().accept(self)
         return UpdateAttribute(target, attribute, expression)
 
-    def visitCondition_statement(self, ctx: POKEParser.Condition_statementContext):
-        conditions = [cond.accept(self) for cond in ctx.condition()]
-        body = [stmt.accept(self) for stmt in ctx.statement()]
-        return ConditionStatement(conditions, body)
 
     def visitCondition(self, ctx: POKEParser.ConditionContext):
         left = ctx.expression(0).accept(self)
@@ -70,6 +66,8 @@ class ASTGeneration(POKEVisitor):
             return Float(float(ctx.FLOAT().getText()))
         elif ctx.BOOLEAN():
             return Boolean(ctx.BOOLEAN().getText() == "true")
+        elif ctx.RANDOM():
+            return RandomValue()
 
     def visitTrigger_statement(self, ctx: POKEParser.Trigger_statementContext):
         move = ctx.IDENTIFIER(0).getText()
@@ -109,7 +107,7 @@ class ASTGeneration(POKEVisitor):
         if ctx.getChildCount() == 1:
            return ctx.term().accept(self)
         else:
-           left = ctx.expression().accept(self)
+           left = ctx.arithmatic().accept(self)
            operator = ctx.getChild(1).getText()
            right = ctx.term().accept(self)
            return ArithmeticExpression(left, operator, right)
@@ -124,7 +122,13 @@ class ASTGeneration(POKEVisitor):
                 return ArithmeticTerm(left, operator, right)
 
     def visitFactor(self, ctx: POKEParser.FactorContext):
-        if ctx.expression():
+        if ctx.arithmatic():
+            return ctx.arithmatic().accept(self)
+        elif ctx.value():
+            return ctx.value().accept(self)  
+        elif ctx.IDENTIFIER(0) and ctx.IDENTIFIER(1):
+            return AttributeAccess(entity=ctx.IDENTIFIER(0).getText(), attribute=ctx.IDENTIFIER(1).getText())
+        elif ctx.expression():
             return ctx.expression().accept(self)
         elif ctx.IDENTIFIER():
             return AttributeAccess(entity = ctx.IDENTIFIER(0).getText(), attribute = ctx.IDENTIFIER(1).getText())

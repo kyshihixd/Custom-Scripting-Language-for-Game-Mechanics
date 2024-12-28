@@ -104,11 +104,6 @@ class POKEVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by POKEParser#condition_statement.
-    def visitCondition_statement(self, ctx:POKEParser.Condition_statementContext):
-        return self.visitChildren(ctx)
-
-
     # Visit a parse tree produced by POKEParser#condition.
     def visitCondition(self, ctx:POKEParser.ConditionContext):
         return self.visitChildren(ctx)

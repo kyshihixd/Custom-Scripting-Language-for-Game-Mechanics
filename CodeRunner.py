@@ -1,6 +1,6 @@
 import math
 from ASTUtils import *
-
+import random
 class CodeRunner:
     def __init__(self):
         self.pokemon = {}
@@ -16,11 +16,25 @@ class CodeRunner:
 
 
     def visitPokemon(self, ctx: Pokemon):
-        attributes = {attr.key: attr.value for attr in ctx.attributes}
+        attributes = {}
+        for attr in ctx.attributes:
+          value = attr.value
+          if isinstance(value, RandomValue):
+              value =  random.randint(0, 100)
+          else: value = value.value
+          attributes[attr.key] = value
+
         self.pokemon[ctx.name] = attributes
+    
 
     def visitMove(self, ctx: Move):
-        attributes = {attr.key: attr.value for attr in ctx.attributes}
+        attributes = {}
+        for attr in ctx.attributes:
+            value = attr.value
+            if isinstance(value, RandomValue):
+              value =  random.randint(0, 100)
+            else : value = value.value
+            attributes[attr.key] = value
         self.moves[ctx.name] = attributes
 
     def visitActionStatement(self, ctx: ActionStatement):
@@ -64,13 +78,6 @@ class CodeRunner:
         else:
             raise Exception(f"Unknown target: {ctx.target}")
 
-    def visitConditionStatement(self, ctx: ConditionStatement):
-        for condition in ctx.conditions:
-            if not condition.accept(self):
-                return
-            
-        for statement in ctx.statements:
-            statement.accept(self)
 
     def visitCondition(self, ctx: Condition):
         if isinstance(ctx.left.accept(self), int):
@@ -115,6 +122,8 @@ class CodeRunner:
     def visitFloat(self, ctx: Float): return ctx.value
     def visitString(self, ctx: String): return ctx.value
     def visitBoolean(self, ctx: Boolean): return ctx.value
+    def visitRandomValue(self, ctx: RandomValue):
+        return Int(random.randint(0, 100))
 
     def visitTriggerStatement(self, ctx: TriggerStatement):
         self.triggers[ctx.move] = ctx
@@ -153,12 +162,17 @@ class CodeRunner:
             left_value = left_value.value
         if isinstance(right_value, Int) or isinstance(right_value, Float) or isinstance(right_value, Boolean):
             right_value = right_value.value
-        if ctx.operator == "+":
-            return Int(value = left_value + right_value)
-        elif ctx.operator == "-":
-            return Int(value = left_value - right_value)
-        else:
-            raise Exception("Unknown arithmetic operator")
+
+        if ctx.operator == '+':
+            return left_value + right_value
+        elif ctx.operator == '-':
+            return left_value - right_value
+        elif ctx.operator == '*':
+            return left_value * right_value
+        elif ctx.operator == '/':
+            if right_value == 0:
+                raise ZeroDivisionError("Division by zero")
+            return left_value / right_value
     
     def visitArithmeticTerm(self, ctx: ArithmeticTerm):
         left_value = ctx.left.accept(self)
@@ -171,6 +185,8 @@ class CodeRunner:
         if ctx.operator == "*":
             return Int(value = left_value * right_value)
         elif ctx.operator == "/":
+            if right_value == 0:
+                raise ZeroDivisionError("Division by zero")
             return Int(value = left_value / right_value)
         else:
             raise Exception("Unknown arithmetic operator")

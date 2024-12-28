@@ -53,12 +53,6 @@ class UpdateAttribute:
     def accept(self, visitor):
         return visitor.visitUpdateAttribute(self)
 
-@dataclass
-class ConditionStatement:
-    conditions: List
-    statements: List
-    def accept(self, visitor):
-        return visitor.visitConditionStatement(self)
 
 @dataclass
 class Condition:
@@ -82,6 +76,11 @@ class String:
         return self.value
     def accept(self, visitor):
         return visitor.visitString(self)
+
+@dataclass
+class RandomValue:
+    def accept(self, visitor):
+        return visitor.visitRandomValue(self)
 
 @dataclass
 class Int:
