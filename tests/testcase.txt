@@ -36,13 +36,25 @@ move Leafblade {
     power: 30;
 }
 
+move Growth {
+    hp: 30;
+}
+
+trigger Growth (Charmander, Charmander){
+    Charmander.hp = Charmander.hp + Growth.hp;
+}
+
+Charmander uses Growth on Charmander
+status Charmander
 
 trigger Thunderbolt (Pikachu, Charmander){
-    Charmander.hp = (Thunderbolt.power + Pikachu.power)*0.5 ;
+    Charmander.hp = Charmander.hp - (Thunderbolt.power + Pikachu.power)*0.5 ;
     if (random > 50){
         Charmander.state = Thunderbolt.debuff;
     }
 }
+
+
 
 Pikachu uses Thunderbolt on Charmander
 status Pikachu

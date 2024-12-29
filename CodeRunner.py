@@ -39,7 +39,6 @@ class CodeRunner:
 
     def visitActionStatement(self, ctx: ActionStatement):
         trigger_name = ctx.move
-
         if (ctx.pokemon != self.triggers[trigger_name].user or ctx.move != self.triggers[trigger_name].move or ctx.target != self.triggers[trigger_name].target):
             raise Exception(f"Unknown target: unknown trigger")
 
@@ -92,16 +91,17 @@ class CodeRunner:
             right_value = ctx.right.accept(self)   
         else: right_value = ctx.right.accept(self).value
 
-        if ctx.operator == "<":
-            return left_value < right_value
-        elif ctx.operator == ">":
-            return left_value > right_value
-        elif ctx.operator == "==":
-            return left_value == right_value
-        elif ctx.operator == "!=":
-            return left_value != right_value
-        else:
-            raise Exception(f"Unknown comparison operator: {ctx.operator}")
+        if ctx.operator in ('<', '>', '==', '!='):
+            if ctx.operator == "<":
+                return left_value < right_value
+            elif ctx.operator == ">":
+                return left_value > right_value
+            elif ctx.operator == "==":
+                return left_value == right_value
+            elif ctx.operator == "!=":
+                return left_value != right_value
+            else:
+                raise Exception(f"Unknown comparison operator: {ctx.operator}")
 
     def visitAttributeAccess(self, ctx: AttributeAccess):
         entity_name = ctx.entity 
