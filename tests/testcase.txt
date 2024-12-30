@@ -51,7 +51,7 @@ trigger Thunderbolt (Pikachu, Charmander){
     Charmander.hp = Charmander.hp - (Thunderbolt.power + Pikachu.power)*0.5 ;
     if (random > 50){
         Charmander.state = Thunderbolt.debuff;
-    }
+    };
 }
 
 
@@ -63,7 +63,7 @@ status Charmander
 trigger Flamethrower (Charmander, Pikachu){
     if (Charmander.state == "paralasis"){
         Charmander.hp = Charmander.hp -25;
-    }
+    };
 }
 
 Charmander uses Flamethrower on Pikachu

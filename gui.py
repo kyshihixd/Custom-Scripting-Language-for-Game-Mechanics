@@ -3,20 +3,17 @@ from tkinter import scrolledtext
 from tkinter import font
 from PIL import Image, ImageTk, ImageDraw
 from tkinter import scrolledtext, END
-from test import runTree  # Import the AntlrProcessor class
+from test import runTree  
 
 def create_base_ui_with_output():
-    # --- Customizable Size Variables ---
     gui_width = 600
     gui_height = 800
     input_box_height = 16
     output_box_height = 15
     screen_width = 580
-    screen_height = 150 # Screen height should be small for the output box to not be larger than it needs to
+    screen_height = 150
     corner_radius = 15
-    # ----------------------------------
 
-    # Create an instance of the AntlrProcessor
     processor = runTree()
 
     def submit_text():
@@ -42,7 +39,6 @@ def create_base_ui_with_output():
                 output_box.insert(END, f"{error}\n")
             output_box.insert(END, "--------------------\n")
         output_box.config(state=tk.DISABLED)
-        # Removed input_box.delete("1.0", END)
 
     def create_rounded_rectangle(width, height, corner_radius, color):
         """Creates a PIL Image with a rounded rectangle."""
@@ -58,14 +54,14 @@ def create_base_ui_with_output():
         output_box.config(state=tk.DISABLED)
 
     root = tk.Tk()
-    root.title("Game Boy Style GUI")
+    root.title("GUI")
     root.geometry(f"{gui_width}x{gui_height}")
     root.configure(bg="#545454")
 
     main_frame = tk.Frame(root, bg="#c6c6c6")
     main_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-    # Control Buttons and Input Section (Now at the top)
+
     controls_frame = tk.Frame(main_frame, bg="#c6c6c6")
     controls_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=(5, 10))
 
@@ -94,15 +90,13 @@ def create_base_ui_with_output():
     screen_label.image = screen_bg_img
     screen_label.pack(fill=tk.BOTH, expand=True)
 
-    # Output Box (Simulated Screen)
+    # Output Box
     output_box = scrolledtext.ScrolledText(screen_label, height=output_box_height, bg="#a9d2ce", fg="black", font=("Courier New", 10), wrap=tk.WORD, state=tk.DISABLED, borderwidth=0, highlightthickness=0)
     output_box.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=5, pady=5)
 
 
-    # Add Game Boy-style border
     root.resizable(False, False)
 
-    # Run the GUI
     root.mainloop()
 
 if __name__ == "__main__":
