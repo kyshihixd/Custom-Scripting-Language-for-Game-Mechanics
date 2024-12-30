@@ -1,19 +1,21 @@
 import tkinter as tk
 from tkinter import scrolledtext
 from tkinter import font
-from PIL import Image, ImageTk, ImageDraw
 from tkinter import scrolledtext, END
-from test import runTree  
+from test import runTree  # Import the AntlrProcessor class
 
 def create_base_ui_with_output():
+    # --- Customizable Size Variables ---
     gui_width = 600
     gui_height = 800
     input_box_height = 16
-    output_box_height = 15
-    screen_width = 580
-    screen_height = 150
+    output_box_height = 8.2
     corner_radius = 15
+    screen_height = output_box_height * 22 # Calculate based on output_box_height
+    screen_width = 580
+    # ----------------------------------
 
+    # Create an instance of the AntlrProcessor
     processor = runTree()
 
     def submit_text():
@@ -39,13 +41,21 @@ def create_base_ui_with_output():
                 output_box.insert(END, f"{error}\n")
             output_box.insert(END, "--------------------\n")
         output_box.config(state=tk.DISABLED)
+        # Removed input_box.delete("1.0", END)
 
-    def create_rounded_rectangle(width, height, corner_radius, color):
-        """Creates a PIL Image with a rounded rectangle."""
-        image = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-        draw = ImageDraw.Draw(image)
-        draw.rounded_rectangle((0, 0, width, height), corner_radius, fill=color)
-        return ImageTk.PhotoImage(image)
+    def create_rounded_rectangle(width, height, corner_radius, color, canvas):
+        """Creates a rounded rectangle using polygon on canvas."""
+        points = [
+            (corner_radius, 0),  # top-left
+            (width - corner_radius, 0),  # top-right
+            (width, corner_radius),  # right-top
+            (width, height - corner_radius),  # right-bottom
+            (width - corner_radius, height),  # bottom-right
+            (corner_radius, height),  # bottom-left
+            (0, height - corner_radius),  # left-bottom
+            (0, corner_radius)   #left-top
+        ]
+        return canvas.create_polygon(points, fill=color, smooth=True, width=0)
 
     def clear_output():
         """Clears the output box."""
@@ -61,7 +71,7 @@ def create_base_ui_with_output():
     main_frame = tk.Frame(root, bg="#c6c6c6")
     main_frame.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 
-
+    # Control Buttons and Input Section (Now at the top)
     controls_frame = tk.Frame(main_frame, bg="#c6c6c6")
     controls_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=(5, 10))
 
@@ -71,7 +81,7 @@ def create_base_ui_with_output():
     input_box = tk.Text(controls_frame, height=input_box_height, bg="#ffffff", fg="black", font=("Courier New", 12))
     input_box.pack(fill=tk.BOTH, padx=10, expand=True)
 
-    # Buttons
+     # Buttons
     button_font = font.Font(family="Arial", size=12, weight="bold")
     button_frame = tk.Frame(controls_frame, bg="#c6c6c6")
     button_frame.pack(fill=tk.X, pady=5)
@@ -81,22 +91,24 @@ def create_base_ui_with_output():
     clear_button = tk.Button(button_frame, text="Clear Output", command=clear_output, bg="#90a4ae", font=button_font, borderwidth=3, relief=tk.RAISED, padx=10)
     clear_button.pack(side=tk.RIGHT, padx=10, pady=10)
 
+
     screen_frame = tk.Frame(main_frame, bg="#d2f5f0", borderwidth=0, highlightthickness=0)
     screen_frame.pack(pady=(5, 10), padx=10, fill=tk.BOTH, expand=True)
-    screen_frame.pack_propagate(False) # Add this
+    screen_frame.pack_propagate(False)
 
-    screen_bg_img = create_rounded_rectangle(screen_width, screen_height, corner_radius, "#d2f5f0")
-    screen_label = tk.Label(screen_frame, image=screen_bg_img, borderwidth=0, highlightthickness=0)
-    screen_label.image = screen_bg_img
-    screen_label.pack(fill=tk.BOTH, expand=True)
+    # Create the rounded rectangle background
+    canvas = tk.Canvas(screen_frame, bg="#d2f5f0", borderwidth=0, highlightthickness=0, width=screen_width, height=screen_height)
+    canvas.pack()
+    create_rounded_rectangle(screen_width, screen_height, corner_radius, "#d2f5f0", canvas)
 
-    # Output Box
-    output_box = scrolledtext.ScrolledText(screen_label, height=output_box_height, bg="#a9d2ce", fg="black", font=("Courier New", 10), wrap=tk.WORD, state=tk.DISABLED, borderwidth=0, highlightthickness=0)
-    output_box.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=5, pady=5)
 
+   
+    # Output Box (Simulated Screen)
+    output_box = scrolledtext.ScrolledText(canvas, height=output_box_height, bg="#a9d2ce", fg="black", font=("Courier New", 10), wrap=tk.WORD, state=tk.DISABLED, borderwidth=0, highlightthickness=0)
+    output_box.place(x=5, y=5, width=screen_width - 10, height=screen_height - 10)
 
     root.resizable(False, False)
-
+    # Run the GUI
     root.mainloop()
 
 if __name__ == "__main__":
